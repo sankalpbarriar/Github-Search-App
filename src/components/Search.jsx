@@ -1,58 +1,77 @@
-"use client";
-import { Button, Input,useToast } from "@chakra-ui/react";
+import { Button, Input, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 
-
-const Search = ({setUserData,setLoading}) => {
+const Search = ({ setUserData, setLoading }) => {
   const [query, setQuery] = useState("");
-	const toast = useToast();
+  const toast = useToast();
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		if (!query) return;
-		setLoading(true);
-		setUserData(null);
-		try {
-			const res = await fetch(`https://api.github.com/users/${query}`);
-			const data = await res.json();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!query) return;
+    setLoading(true);
+    setUserData(null);
+    try {
+      const res = await fetch(`https://api.github.com/users/${query}`);
+      const data = await res.json();
 
-			if (data.message) {
-				return toast({
-					title: "Error",
-					description: data.message === "Not Found" ? "User not found" : data.message,
-					status: "error",
-					duration: 3000,
-					isClosable: true,
-				});
-			}
-			setUserData(data);
-			
-		} catch (error) {
-			toast({
-				title: "Error",
-				description: error.message,
-				status: "error",
-				duration: 3000,
-				isClosable: true,
-			});
-		} finally {
-			setLoading(false);
-		}
-	};
+      if (data.message) {
+        return toast({
+          title: "Error",
+          description:
+            data.message === "Not Found" ? "User not found" : data.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+      setUserData(data);
+      addUserToLocalStorage(data, query);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addUserToLocalStorage = (data, username) => {
+    const users = JSON.parse(localStorage.getItem("github-users")) || [];
+    const userExists = users.find((user) => user.id === username);
+
+    if (userExists) {
+      users.splice(users.indexOf(userExists), 1);
+    }
+    users.unshift({
+      id: username,
+      avatar_url: data.avatar_url,
+      name: data.name,
+      url: data.html_url,
+    });
+
+    localStorage.setItem("github-users", JSON.stringify(users));
+  };
 
   return (
     <form onSubmit={handleSubmit}>
       <Input
         variant={"outline"}
-        placeholder={"type a username (eg. sankalpbarriar)"}
+        placeholder={"Type a username (e.g., sankalpbarriar)"}
         focusBorderColor="green.500"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        mb={{ base: 4, md: 0 }}
+        width={{ base: "100%", md: "auto" }}
       />
       <Button
         size="md"
         type="submit"
-        my={4}
+        my={{ base: 4, md: 0 }}
+        width={{ base: "100%", md: "auto" }}
         colorScheme={"whatsapp"}
         disabled={!query}
         opacity={!query ? 0.5 : 1}
