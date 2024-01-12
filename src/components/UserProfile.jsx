@@ -1,5 +1,13 @@
-import { Avatar, Flex, VStack, Button, Badge, Text, Box } from "@chakra-ui/react";
-import { TiLocationOutline } from "react-icons/ti";
+import {
+  Avatar,
+  Flex,
+  VStack,
+  Button,
+  Badge,
+  Text,
+  Box,
+} from "@chakra-ui/react";
+import { FaLinkedin } from "react-icons/fa";
 import Repos from "./Repos";
 
 const UserProfile = ({ userData }) => {
@@ -20,13 +28,24 @@ const UserProfile = ({ userData }) => {
           textAlign={{ base: "center", md: "left" }}
         >
           <Avatar size={"2xl"} name={userData.name} src={userData.avatar_url} />
-          <Button colorScheme="whatsapp" mt={4} width={{ base: "100%", md: "auto" }}>
-            <a href={userData.html_url} target="_blank" style={{ width: "100%" }}>
+          <Button
+            colorScheme="whatsapp"
+            mt={4}
+            width={{ base: "100%", md: "auto" }}
+          >
+            <a
+              href={userData.html_url}
+              target="_blank"
+              style={{ width: "100%" }}
+            >
               View Profile
             </a>
           </Button>
         </VStack>
-        <VStack alignItems={{ base: "center", md: "self-start" }} textAlign="left">
+        <VStack
+          alignItems={{ base: "center", md: "self-start" }}
+          textAlign="left"
+        >
           <Flex
             gap={4}
             flexWrap={{ base: "wrap", md: "nowrap" }}
@@ -46,9 +65,20 @@ const UserProfile = ({ userData }) => {
             </Badge>
           </Flex>
 
-          <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight={"bold"} mt={4} color={"green.400"}>
-            {userData.name}
-          </Text>
+          <Flex align="center" justifyContent={"center"}>
+            <Text
+              fontSize={{ base: "xl", md: "2xl" }}
+              fontWeight="bold"
+              mt={4}
+              color="green.400"
+            >
+              {userData.name}
+            </Text>
+            <a href="https://www.linkedin.com/in/sankalp-barriar-211793199" target="_blank">
+              <FaLinkedin size={"2rem"} style={{ marginLeft: "8px", marginTop: "7px" }} />
+            </a>
+          </Flex>
+
           <Text fontSize={"md"} fontWeight={"bold"} mt={4} color={"green.500"}>
             {userData.bio}
           </Text>
