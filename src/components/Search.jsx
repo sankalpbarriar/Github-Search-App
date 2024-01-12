@@ -65,12 +65,12 @@ const Search = ({ setUserData, setLoading }) => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         mb={{ base: 4, md: 0 }}
-        width={{ base: "100%", md: "auto" }}
+        width={{ base: "100%", md: "100%" }}
       />
       <Button
         size="md"
         type="submit"
-        my={{ base: 4, md: 0 }}
+        my={{ base: 4, md: 4 }}
         width={{ base: "100%", md: "auto" }}
         colorScheme={"whatsapp"}
         disabled={!query}
