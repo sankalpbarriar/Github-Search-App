@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { FaLinkedin } from "react-icons/fa";
 import Repos from "./Repos";
+import { Link } from "@chakra-ui/react";
 
 const UserProfile = ({ userData }) => {
   return (
@@ -74,9 +75,15 @@ const UserProfile = ({ userData }) => {
             >
               {userData.name}
             </Text>
-            <a href="https://www.linkedin.com/in/sankalp-barriar-211793199" target="_blank">
-              <FaLinkedin size={"2rem"} style={{ marginLeft: "8px", marginTop: "7px" }} />
-            </a>
+            <Link
+      href={userData.blog}
+      target="_blank"
+      _hover={{ color: "#0077b5", transition: "color 0.3s ease" }}
+      display="inline-flex"
+      alignItems="center"
+    >
+      <FaLinkedin size={"2rem"} style={{ marginLeft: "8px", marginTop: "7px" }} />
+    </Link>
           </Flex>
 
           <Text fontSize={"md"} fontWeight={"bold"} mt={4} color={"green.500"}>
